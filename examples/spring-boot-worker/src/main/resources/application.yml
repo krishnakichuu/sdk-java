@@ -1,0 +1,10 @@
+flowd:
+  address: localhost:7233
+  namespace: default
+  task-queue: shipping-spring
+  worker:
+    base-packages: com.flowd.examples.springboot.worker
+
+logging:
+  level:
+    com.flowd.sdk: INFO

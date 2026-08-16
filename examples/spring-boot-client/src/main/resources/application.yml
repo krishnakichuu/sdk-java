@@ -1,0 +1,12 @@
+flowd:
+  address: localhost:7233
+  namespace: default
+  # No flowd.task-queue: FlowdWorkerAutoConfiguration is
+  # @ConditionalOnProperty(prefix = "flowd", name = "task-queue"), so
+  # leaving it unset disables worker auto-configuration entirely — this
+  # process only ever gets a FlowdClient/WorkflowClient bean, never a
+  # FlowdWorker. That's what makes this a client-only process.
+
+logging:
+  level:
+    com.flowd.sdk: INFO

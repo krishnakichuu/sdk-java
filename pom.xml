@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.flowd</groupId>
+  <artifactId>flowd-sdk-parent</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>flowd Java SDK (parent)</name>
+  <description>
+    Java SDK for flowd (github.com/krishnakichuu/flowd). A standalone,
+    multi-module Maven project — a sibling of flowd-engine (the Go server),
+    not nested inside it and not part of its build graph.
+
+    Module layout:
+      flowd-sdk-core               framework-agnostic core: annotations,
+                                    replay engine, client, worker. The only
+                                    module every application depends on.
+      flowd-sdk-spring-boot-starter  optional auto-configuration for Spring
+                                    Boot, depends on core, adds zero
+                                    dependencies to it.
+      examples/plain-java           runnable examples with no DI framework.
+      examples/spring-boot-worker    consumer half of the Spring Boot
+                                    example: runs FlowdWorker, never starts
+                                    a workflow itself.
+      examples/spring-boot-client    producer half: starts workflow runs
+                                    via WorkflowClient, runs no worker.
+
+    See ARCHITECTURE.md for the full design rationale.
+  </description>
+
+  <modules>
+    <module>flowd-sdk-core</module>
+    <module>flowd-sdk-spring-boot-starter</module>
+    <module>examples/plain-java</module>
+    <module>examples/spring-boot-worker</module>
+    <module>examples/spring-boot-client</module>
+  </modules>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <protobuf.version>4.35.1</protobuf.version>
+    <grpc.version>1.83.1</grpc.version>
+    <junit.version>5.11.3</junit.version>
+    <jackson.version>2.18.2</jackson.version>
+    <slf4j.version>2.0.16</slf4j.version>
+    <spring-boot.version>3.3.5</spring-boot.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.flowd</groupId>
+        <artifactId>flowd-sdk-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.flowd</groupId>
+        <artifactId>flowd-sdk-spring-boot-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java</artifactId>
+        <version>${protobuf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java-util</artifactId>
+        <version>${protobuf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-protobuf</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-stub</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-netty-shaded</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>1.3.2</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Deliberately NOT importing spring-boot-dependencies here: this
+           dependencyManagement is inherited by flowd-sdk-core too, and core
+           must stay uncontaminated by any framework's BOM (see
+           ARCHITECTURE.md, "clear separation between SDK core and
+           framework-specific integrations"). flowd-sdk-spring-boot-starter
+           and each examples/spring-boot-* module imports it locally
+           instead. -->
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.5.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.5.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.xolstice.maven.plugins</groupId>
+          <artifactId>protobuf-maven-plugin</artifactId>
+          <version>0.6.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

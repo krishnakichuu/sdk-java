@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.flowd</groupId>
+    <artifactId>flowd-sdk-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>flowd-sdk-examples-plain-java</artifactId>
+  <packaging>jar</packaging>
+
+  <name>flowd Java SDK - Examples (plain Java)</name>
+  <description>
+    Runnable examples with no DI framework: plain `main()` methods, manual
+    wiring. Proves flowd-sdk-core needs nothing beyond a JDK to use.
+
+    - helloworkflow: the original low-level (function-reference) API.
+    - orderprocessing: the annotation-based, interface/stub API
+      (@WorkflowInterface/@ActivityInterface), the one documented in
+      ARCHITECTURE.md and intended for new code.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.flowd</groupId>
+      <artifactId>flowd-sdk-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.16</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

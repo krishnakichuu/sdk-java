@@ -1,0 +1,2 @@
+com.flowd.sdk.spring.FlowdClientAutoConfiguration
+com.flowd.sdk.spring.FlowdWorkerAutoConfiguration
