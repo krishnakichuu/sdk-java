@@ -5,14 +5,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.flowd</groupId>
+    <groupId>io.github.krishnakichuu</groupId>
     <artifactId>flowd-sdk-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>flowd-sdk-examples-spring-boot-worker</artifactId>
   <packaging>jar</packaging>
+
+  <!-- Example app, not a library — never publish this to Central even if
+       `mvn deploy` is run from the repo root. -->
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
 
   <name>flowd Java SDK - Examples (Spring Boot, Worker)</name>
   <description>
@@ -40,7 +46,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.flowd</groupId>
+      <groupId>io.github.krishnakichuu</groupId>
       <artifactId>flowd-sdk-spring-boot-starter</artifactId>
     </dependency>
     <dependency>
